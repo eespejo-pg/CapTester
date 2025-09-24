@@ -1,5 +1,4 @@
 # language: es
-@inicioSesion
 @testingPractica
 Característica: Inicio de sesión
 
@@ -7,6 +6,7 @@ Característica: Inicio de sesión
   Quiero iniciar sesión en la web
   Para corroborar el acceso a mi cuenta
 
+  @inicioSesion
   Escenario: Iniciar sesión en la web
     Dado que abro la página de login del ejercicio
     Cuando ingreso con las credenciales válidas
