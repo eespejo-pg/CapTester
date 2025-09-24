@@ -6,8 +6,6 @@ import ChromeConfigs.ChromeConfigs;
 public class DriverManager {
     private static WebDriver driver;
 
-    public DriverManager() {}
-
     public static WebDriver getDriver() {
         if (driver == null) {
             // Usa la configuración de Chrome desde `ChromeConfigs`

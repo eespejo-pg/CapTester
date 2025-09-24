@@ -15,7 +15,7 @@ public class BasePage {
 
     public BasePage() {
         this.driver = DriverManager.getDriver();
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
     }
 
     @Attachment(value = "{action}", type = "image/png")
@@ -72,7 +72,7 @@ public class BasePage {
         WebElement element = findElement(locator);
         element.clear();
         element.sendKeys(text);
-        takeScreenshotAllure("SendKeys en: " + locator.toString());
+        takeScreenshotAllure("Envía texto en: " + locator.toString());
     }
 
     protected String getText(By locator) {
@@ -100,7 +100,7 @@ public class BasePage {
         WebElement element = findElement(locator);
         takeScreenshotAllure("Verificar si está habilitado: " + locator.toString());
         if (!element.isEnabled()) {
-            throw new RuntimeException("Element is not enabled: " + locator);
+            throw new RuntimeException("Elemento está habilitado: " + locator);
         }
     }
 
@@ -108,7 +108,7 @@ public class BasePage {
         WebElement element = findElement(locator);
         takeScreenshotAllure("Verificar si está seleccionado: " + locator.toString());
         if (!element.isSelected()) {
-            throw new RuntimeException("Element is not selected: " + locator);
+            throw new RuntimeException("Elemento no está seleccionado: " + locator);
         }
     }
 

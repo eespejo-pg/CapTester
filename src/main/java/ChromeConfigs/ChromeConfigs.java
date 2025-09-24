@@ -10,6 +10,16 @@ public class ChromeConfigs {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized", "--incognito", "--lang=es");
+
+        // Argumento para ejecutar el navegador en modo headless
+        // options.addArguments("--headless");
+
+        // Ajustes adicionales que pueden ser útiles
+        options.addArguments("--window-size=1920,1080");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+
         return new ChromeDriver(options);
     }
 }

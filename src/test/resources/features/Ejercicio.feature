@@ -1,5 +1,6 @@
 # language: es
 @inicioSesion
+@testingPractica
 Característica: Inicio de sesión
 
   Como usuario
