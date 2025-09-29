@@ -1,4 +1,4 @@
-package ChromeConfigs;
+package chromeConfigs;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -9,16 +9,24 @@ public class ChromeConfigs {
     public static WebDriver getChromeDriver() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--start-maximized", "--incognito", "--lang=es");
 
-        // Argumento para ejecutar el navegador en modo headless
-        // options.addArguments("--headless");
+        // Configuración básica
+        options.addArguments("--start-maximized");
+        options.addArguments("--incognito");
+        options.addArguments("--lang=es");
 
-        // Ajustes adicionales que pueden ser útiles
+        // Configuración específica para headless
+        options.addArguments("--headless=new"); // Nuevo argumento para Chrome
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
+
+        // Argumentos adicionales para mejorar la estabilidad
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--disable-web-security");
+        options.addArguments("--ignore-certificate-errors");
+        options.addArguments("--enable-javascript");
 
         return new ChromeDriver(options);
     }

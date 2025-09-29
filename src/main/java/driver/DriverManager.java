@@ -1,7 +1,7 @@
 package driver;
 
 import org.openqa.selenium.WebDriver;
-import ChromeConfigs.ChromeConfigs;
+import chromeConfigs.ChromeConfigs;
 
 public class DriverManager {
     private static WebDriver driver;

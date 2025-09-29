@@ -32,21 +32,27 @@ public class BasePage {
         takeScreenshotAllure("Navegar a: " + url);
     }
 
-    protected WebElement findElement(By locator) {
-        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    WebElement findElement(By locator) {
+        try {
+            wait.until(ExpectedConditions.jsReturnsValue("return document.readyState === 'complete'"));
+            return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+        } catch (TimeoutException e) {
+            takeScreenshotAllure("Error: Elemento no encontrado - " + locator.toString());
+            throw e;
+        }
     }
 
-    protected List<WebElement> findElements(By locator) {
+    List<WebElement> findElements(By locator) {
         return wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(locator));
     }
 
-    protected boolean isDisplayed(By locator) {
+    boolean isDisplayed(By locator) {
         WebElement element = findElement(locator);
         takeScreenshotAllure("Verificar visibilidad de: " + locator.toString());
         return element.isDisplayed();
     }
 
-    protected boolean areDisplayed(By locator) {
+    boolean areDisplayed(By locator) {
         try {
             wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
             takeScreenshotAllure("Verificar visibilidad de todos los elementos: " + locator.toString());
@@ -56,32 +62,32 @@ public class BasePage {
         }
     }
 
-    protected void waitAndClick(By locator) {
+    void waitAndClick(By locator) {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
         element.click();
         takeScreenshotAllure("Click esperado en: " + locator.toString());
     }
 
-    protected void click(By locator) {
+    void click(By locator) {
         WebElement element = findElement(locator);
         element.click();
         takeScreenshotAllure("Click en: " + locator.toString());
     }
 
-    protected void sendKeys(By locator, String text) {
+    void sendKeys(By locator, String text) {
         WebElement element = findElement(locator);
         element.clear();
         element.sendKeys(text);
         takeScreenshotAllure("Envía texto en: " + locator.toString());
     }
 
-    protected String getText(By locator) {
+    String getText(By locator) {
         WebElement element = findElement(locator);
         takeScreenshotAllure("Obtener texto de: " + locator.toString());
         return element.getText();
     }
 
-    protected void selectByValue(By locator, String value) {
+    void selectByValue(By locator, String value) {
         WebElement dropdown = findElement(locator);
         dropdown.click();
         By optionLocator = By.xpath(".//option[@value='" + value + "']");
@@ -90,13 +96,13 @@ public class BasePage {
         takeScreenshotAllure("Seleccionar valor: " + value + " en: " + locator.toString());
     }
 
-    protected void clearInput(By locator) {
+    void clearInput(By locator) {
         WebElement element = findElement(locator);
         element.clear();
         takeScreenshotAllure("Limpiar input: " + locator.toString());
     }
 
-    protected void isEnabled(By locator) {
+    void isEnabled(By locator) {
         WebElement element = findElement(locator);
         takeScreenshotAllure("Verificar si está habilitado: " + locator.toString());
         if (!element.isEnabled()) {
@@ -104,7 +110,7 @@ public class BasePage {
         }
     }
 
-    protected void isSelected(By locator) {
+    void isSelected(By locator) {
         WebElement element = findElement(locator);
         takeScreenshotAllure("Verificar si está seleccionado: " + locator.toString());
         if (!element.isSelected()) {
@@ -112,46 +118,46 @@ public class BasePage {
         }
     }
 
-    protected void acceptAlert() {
+    void acceptAlert() {
         wait.until(ExpectedConditions.alertIsPresent()).accept();
     }
 
-    protected void dismissAlert() {
+    void dismissAlert() {
         wait.until(ExpectedConditions.alertIsPresent()).dismiss();
     }
 
-    protected String getAlertText() {
+    String getAlertText() {
         return wait.until(ExpectedConditions.alertIsPresent()).getText();
     }
 
-    protected void switchToFrame(By locator) {
+    void switchToFrame(By locator) {
         WebElement frame = findElement(locator);
         driver.switchTo().frame(frame);
     }
 
-    protected void switchToDefaultContent() {
+    void switchToDefaultContent() {
         driver.switchTo().defaultContent();
     }
 
-    protected void scrollToElement(By locator) {
+    void scrollToElement(By locator) {
         WebElement element = findElement(locator);
         ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
         takeScreenshotAllure("Desplazar a elemento: " + locator.toString());
     }
 
-    protected void waitForElementToBeClickable(By locator) {
+    void waitForElementToBeClickable(By locator) {
         wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
-    protected void waitForElementToBeVisible(By locator) {
+    void waitForElementToBeVisible(By locator) {
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    protected void waitForElementToDisappear(By locator) {
+    void waitForElementToDisappear(By locator) {
         wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
 
-    protected void waitForAlert() {
+    void waitForAlert() {
         wait.until(ExpectedConditions.alertIsPresent());
     }
 }
