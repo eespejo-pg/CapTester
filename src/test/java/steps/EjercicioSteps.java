@@ -24,5 +24,6 @@ public class EjercicioSteps {
     @Entonces("valido que el login es exitoso con el mensaje de bienvenida")
     public void validarLoginExitoso() {
         ejercicioPage.validarLoginExitoso();
+        ejercicioPage.validarLoginExitoso("You logged into a secure area!");
     }
 }

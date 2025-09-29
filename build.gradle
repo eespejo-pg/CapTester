@@ -12,8 +12,20 @@ dependencies {
     implementation 'org.seleniumhq.selenium:selenium-java:4.35.0'
     implementation 'io.github.bonigarcia:webdrivermanager:6.3.2'
     implementation 'io.cucumber:cucumber-java:7.22.0'
+
+    // JUnit 5 (Jupiter)
+    implementation platform('org.junit:junit-bom:5.10.1')
+    implementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params'
+
+    // Cucumber y JUnit 4 (para compatibilidad)
     testImplementation 'io.cucumber:cucumber-junit:7.22.0'
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.10.1'
+
+    // Allure
     testImplementation 'io.qameta.allure:allure-cucumber7-jvm:2.19.0'
 }
 
@@ -28,7 +40,7 @@ task cleanAllureResults(type: Delete) {
 }
 
 task testTag(type: Test) {
-    useJUnit()
+    useJUnitPlatform()
     systemProperty "cucumber.filter.tags", System.getProperty("tags")
     dependsOn cleanAllureResults
 }
@@ -37,10 +49,15 @@ task generateAllureReport(type: Exec) {
     def allureExecutable = file('build/allure/commandline/bin/allure.bat').absolutePath
     commandLine allureExecutable, 'serve', 'build/allure-results'
 }
+
 allure {
     version = '2.19.0'
 }
 
 test {
-    useJUnit()
+    useJUnitPlatform()
+    systemProperties = System.properties
+    testLogging {
+        events "PASSED", "SKIPPED", "FAILED"
+    }
 }
