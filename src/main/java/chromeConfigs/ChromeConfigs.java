@@ -16,7 +16,7 @@ public class ChromeConfigs {
         options.addArguments("--lang=es");
 
         // Configuración específica para headless
-        options.addArguments("--headless=new"); // Nuevo argumento para Chrome
+        // options.addArguments("--headless=new"); // Nuevo argumento para Chrome
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");

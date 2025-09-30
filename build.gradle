@@ -34,7 +34,6 @@ task cleanAllureResults(type: Delete) {
 }
 
 task testTag(type: Test) {
-    useJUnit()
     systemProperty "cucumber.filter.tags", System.getProperty("tags")
     dependsOn cleanAllureResults
 }
