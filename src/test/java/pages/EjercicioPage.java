@@ -3,6 +3,7 @@ package pages;
 import io.qameta.allure.Step;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import utils.Validacion;
 
 public class EjercicioPage extends BasePage{
     private By loginInput = By.xpath("//input[@id='username']");
@@ -30,5 +31,11 @@ public class EjercicioPage extends BasePage{
     @Step("Valida el inicio de sesión")
     public void validarLoginExitoso() {
         Assert.assertTrue(isDisplayed(welcomeMessage));
+    }
+
+    @Step("Validar login realizado con éxito")
+    public void validarLoginExitoso(String mensajeEsperado) {
+        String mensajeActual = getText(welcomeMessage);
+        Validacion.validarTexto(mensajeActual, mensajeEsperado);
     }
 }

@@ -12,8 +12,14 @@ dependencies {
     implementation 'org.seleniumhq.selenium:selenium-java:4.35.0'
     implementation 'io.github.bonigarcia:webdrivermanager:6.3.2'
     implementation 'io.cucumber:cucumber-java:7.22.0'
+    implementation 'junit:junit:4.13.2'
+
+    // Cucumber y JUnit 4 (para compatibilidad)
+    testImplementation 'io.cucumber:cucumber-java:7.22.0'
     testImplementation 'io.cucumber:cucumber-junit:7.22.0'
     testImplementation 'junit:junit:4.13.2'
+
+    // Allure
     testImplementation 'io.qameta.allure:allure-cucumber7-jvm:2.19.0'
 }
 
@@ -28,7 +34,6 @@ task cleanAllureResults(type: Delete) {
 }
 
 task testTag(type: Test) {
-    useJUnit()
     systemProperty "cucumber.filter.tags", System.getProperty("tags")
     dependsOn cleanAllureResults
 }
@@ -37,10 +42,13 @@ task generateAllureReport(type: Exec) {
     def allureExecutable = file('build/allure/commandline/bin/allure.bat').absolutePath
     commandLine allureExecutable, 'serve', 'build/allure-results'
 }
+
 allure {
     version = '2.19.0'
 }
 
 test {
-    useJUnit()
+    systemProperties = System.properties
+    systemProperty "cucumber.filter.tags", System.getProperty("tags")
+    dependsOn cleanAllureResults
 }
